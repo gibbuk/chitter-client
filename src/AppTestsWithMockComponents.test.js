@@ -54,26 +54,19 @@ describe(`App component tests`, () => {
     test(`Should render the Loading component whilst waiting for data`, async () => {
       axios.get.mockResolvedValueOnce(new Error());
       await act(async () => render(<App />));
-      await waitFor(() =>
-        expect(screen.getByTestId("Loading")).toBeInTheDocument()
-      );
+      await screen.findByTestId("Loading");
     });
 
     test(`It should render the AllPeeps component when data received`, async () => {
       axios.get.mockResolvedValueOnce({ data: peeps });
       await act(async () => render(<App />));
-      await waitFor(() =>
-        expect(screen.getByTestId("AllPeeps")).toBeInTheDocument()
-      );
+      await screen.findByTestId("AllPeeps");
     });
 
-    test.skip(`It should render the error component if it receives an error`, async () => {
-      const message = "There was an error";
-      axios.get.mockResolvedValueOnce(new Error(message));
+    test(`It should render the error component if it receives an error`, async () => {
+      axios.get.mockRejectedValue({ message: "error" });
       await act(async () => render(<App />));
-      await waitFor(() =>
-        expect(screen.getByTestId("Error")).toBeInTheDocument()
-      );
+      await screen.findByTestId("Error");
     });
   });
 });
