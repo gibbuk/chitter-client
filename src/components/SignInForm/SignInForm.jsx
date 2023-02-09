@@ -25,7 +25,8 @@ const SignInForm = ({ setLoginUser }) => {
         setLoginUser(res.data.user);
       }
     } catch (error) {
-      alert(error.message);
+      if (error.response?.data.message) alert(error.response.data.message);
+      else alert(error.message);
     }
     setUser({ username: ``, password: `` });
   };

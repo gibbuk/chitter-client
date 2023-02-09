@@ -26,7 +26,8 @@ const SignUpForm = () => {
       });
       alert(res.data.message);
     } catch (error) {
-      alert(error.message);
+      if (error.response?.data.message) alert(error.response.data.message);
+      else alert(error.message);
     }
     setNewUser({
       username: ``,
